@@ -1,3 +1,6 @@
+# vault 1
+
+```html
 <template>
     <div v-if="hideStatus == false" 
         :class="[...appearanceProperties.fieldElementClasses]" 
@@ -104,25 +107,19 @@
                 </p>
             </span>
         </div>
-        <!-- TODO: range slider -->
+        <!-- range slider -->
         <section v-if="elementProperty.fieldtype == 'range'">
-            <input
-            dense
-            v-if="elementProperty.fieldtype == 'range'"
-            v-model="inputValue"
-            :label="elementProperty.fieldLabel"
-            :hint="fieldDetails ? fieldDetails : elementProperty.fieldDetails"
-            :min="dataSet && dataSet.min ? dataSet.min : 0"
-            :max="dataSet && dataSet.max ? dataSet.max : 100"
-            type="range"
-            thumb-label
-            persistent-hint
-            :error-messages="errorMsg"
-            :disabled="disableStatus"
-            :style="{background:bgColor}"
-            :loading="loadingStatus"
-            :id="myId"
-            :class="[classes, 'fullwidth pad050 borderRad4']"
+            <RangeSlider 
+                :error-messages="errorMsg"
+                :loading="loadingStatus"
+                :style="{background:bgColor}"
+                :id="myId"
+                :class="[classes, 'fullwidth padtop025 padbottom025 borderRad4']"
+                :disabled="disableStatus"
+                :label="elementProperty.fieldLabel"
+                :min="dataSet && dataSet.min ? dataSet.min : 20"
+                :max="dataSet && dataSet.max ? dataSet.max : 100"
+                @change="(value) => inputValue = value"
             />
             <span>
                 <p class="padleft050 err field-p" :style="{}" >
@@ -130,24 +127,25 @@
                 </p>
             </span>
         </section>
-
-        <!-- TODO: switch -->
-        <v-switch
-            dense
-            class="v-input--reverse v-input--expand"
-            v-if="elementProperty.fieldtype == 'switch'"
-            v-model="inputValue"
-            :label="elementProperty.fieldLabel"
-            persistent-hint
-            :hint="fieldDetails ? fieldDetails : elementProperty.fieldDetails"
-            :error-messages="errorMsg"
-            :disabled="disableStatus"
-            :style="{background:bgColor}"
-            :loading="loadingStatus"
-            :id="myId"
-            :class="classes"
-        >
-        </v-switch>
+        <!-- switch -->
+        <section v-if="elementProperty.fieldtype == 'switch'" >
+            <MySwitch 
+                :error-messages="errorMsg"
+                :loading="loadingStatus"
+                :style="{background:bgColor}"
+                :id="myId"
+                :class="[classes, 'fullwidth padtop025 padbottom025 borderRad4']"
+                :disabled="disableStatus"
+                :label="elementProperty.fieldLabel"
+                @change="(value) => inputValue = value"
+            />
+            <span>
+                <p class="padleft050 err field-p" :style="{}" >
+                    {{errorMsg ? errorMsg : elementProperty.fieldDetails}}
+                </p>
+            </span>
+        </section>
+        
         <!-- TODO: select -->
         <v-select
             small-chips
@@ -193,7 +191,10 @@
 </template>
 
 <script>
+import RangeSlider from './range-slider'
+import MySwitch from './switch'
 export default {
+    components: {RangeSlider, MySwitch},
     props: ['elementProperty','appearanceProperties','formMethods','hostMethods'],
     data: () => ({
         inputValue: undefined,
@@ -361,3 +362,4 @@ export default {
  
 
 </style>
+```

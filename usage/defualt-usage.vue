@@ -5,6 +5,7 @@
             @onSubmit="sumbit"
             @onChange="() => {}"
             :appearance="{
+                primaryColor: '#5a8ab9',
                 fieldElementClasses: ['pad050'],
                 fieldElementCss: {
                     background:'white',
@@ -104,7 +105,7 @@ export default {
                 }                    
             },
             {
-                fieldLabel: 'Age!',
+                fieldLabel: '',
                 fieldtype: 'number', // select, range, number, switch, multiselect, textarea
                 fieldDetails: 'Type your age',
                 fieldId: '',
@@ -161,7 +162,7 @@ export default {
             {
                 fieldLabel: 'Allow Buffering Fragments',
                 fieldtype: 'switch',
-                fieldDetails: 'This label matches most of the examples in the Material Design documentation.',
+                fieldDetails: 'Switch 1',
                 fieldId: '',
                 defaultValue: true,
                 dataSet: {},
@@ -200,7 +201,7 @@ export default {
             {
                 fieldLabel: 'Range',
                 fieldtype: 'range',
-                fieldDetails: 'This label matches most of the examples in the Material Design documentation.',
+                fieldDetails: 'Range Input sample',
                 fieldId: '',
                 defaultValue: 30,
                 dataSet: {},
