@@ -1,10 +1,20 @@
 <template>
-    <main class="flex flexcol">
-        <div class="marginleft050" >
-            <small>{{label}}: {{currentValue}}</small>
+    <main style="padding:0;" class="flex flexcol borderRad4 relative overflowhidden">
+        <div style="border:1px solid gray;" class="pad050 flex spacebetween borderRad4 flexcenter" >
+            <div>
+                <span style="color: gray" >{{label}}:</span> 
+                {{currentValue}}
+            </div>
+            <div > <ard :show="setSliderVisibility" /> </div>
         </div>
-        <div class="relative flex pad050" >
-            <span class="marginright025" >{{min}}</span>
+        <div 
+            v-if="showSlider"
+            :style="{background: 'whitesmoke'}" 
+            class="relative flex pad050 " 
+        >
+            <span class="marginright025" >
+                <small>{{min}}</small>
+            </span>
             <input
                 style="z-index: 2" 
                 v-model="currentValue" 
@@ -14,23 +24,32 @@
                 :min="min" 
                 :max="max"
             >
-            <span class="marginleft025" >{{max}}</span>
+            <span class="marginleft025" >
+                <small>{{max}}</small>
+            </span>
         </div>
-        
     </main>
 </template>
 
 <script>
+import ard from './ard.vue'
 export default {
     props: ['min','max','label'],
+    components: {ard},
     data: () => ({
         currentValue: 0,
         pointPos: undefined,
-        mousePos: undefined
+        mousePos: undefined,
+        showSlider: false
     }),
     watch: {
         currentValue() {
             this.$emit('change',this.currentValue)
+        }
+    },
+    methods: {
+        setSliderVisibility(v) {
+            this.showSlider = v
         }
     }
 }
@@ -48,8 +67,8 @@ export default {
 #rangeSlider::-webkit-slider-thumb {
   -webkit-appearance: none;
     background: #5a8ab9;
-    height: 20px;
-    width: 20px;
+    height: 10px;
+    width: 10px;
     border-radius: 50%;
     cursor: pointer;
 }
