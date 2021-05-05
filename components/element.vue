@@ -27,12 +27,12 @@
                 :style="{background:bgColor}"
                 :loading="loadingStatus"
                 :id="myId"
-                :class="[classes, 'defaultBorder borderRad4 fullwidth pad050']"
+                :class="[classes, 'defaultBorder borderRad4 fullwidth pad050 borderGray']"
             />
             <span>
-                <p class="padleft050 err field-p" :style="{}" >
+                <!-- <p class="padleft050 err field-p" :style="{}" >
                     {{errorMsg ? errorMsg : elementProperty.fieldDetails}}
-                </p>
+                </p> -->
             </span>
         </section>
         <!-- Password -->
@@ -47,12 +47,12 @@
                 :loading="loadingStatus"
                 :id="myId"
                 type="password"
-                :class="[classes, 'defaultBorder borderRad4 fullwidth pad050']"
+                :class="[classes, 'defaultBorder borderRad4 fullwidth pad050 borderGray']"
             />
             <span>
-                <p class="padleft050 err field-p" :style="{}" >
+                <!-- <p class="padleft050 err field-p" :style="{}" >
                     {{errorMsg ? errorMsg : elementProperty.fieldDetails}}
-                </p>
+                </p> -->
             </span>
         </section>
         
@@ -71,17 +71,17 @@
                 :style="{background:bgColor}"
                 :loading="loadingStatus"
                 :id="myId"
-                :class="[classes, 'defaultBorder fullwidth pad050 borderRad4']"
+                :class="[classes, 'defaultBorder fullwidth pad050 borderRad4 borderGray']"
             />
             <span>
-                <p class="padleft050 err field-p" :style="{}" >
+                <!-- <p class="padleft050 err field-p" :style="{}" >
                     {{errorMsg ? errorMsg : elementProperty.fieldDetails}}
-                </p>
+                </p> -->
             </span>
         </div>
         <!-- number -->
         <div class="overflowhidden" v-if="elementProperty.fieldtype == 'number'" >
-            <div class="defaultBorder borderRad4 relative flex overflowhidden flexcenter" >
+            <div class="defaultBorder borderRad4 relative flex overflowhidden flexcenter borderGray" >
                 <div v-if="elementProperty.appendText" class="fullheight-percent flex flexcenter padleft050" >
                     {{elementProperty.appendText}}
                 </div>
@@ -97,14 +97,14 @@
                     :style="{background:bgColor}"
                     :loading="loadingStatus"
                     :id="myId"
-                    :class="[classes, 'fullwidth pad050 borderRad4']"
+                    :class="[classes, 'fullwidth pad050 borderRad4 ']"
 
                 />
             </div>
             <span>
-                <p class="padleft050 err field-p" :style="{}" >
+                <!-- <p class="padleft050 err field-p" :style="{}" >
                     {{errorMsg ? errorMsg : elementProperty.fieldDetails}}
-                </p>
+                </p> -->
             </span>
         </div>
         <!-- range slider -->
@@ -358,7 +358,9 @@ export default {
     color: #333;
     margin: 0;
 }
-
+.borderGray{
+    border: 1px solid lightgray;
+}
  
 
 </style>
