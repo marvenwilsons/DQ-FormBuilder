@@ -1,36 +1,38 @@
 <template>
     <main style="padding:0;" class="flex flexcol borderRad4 relative">
-        <div style="border:1px solid gray;" class="pad050 flex spacebetween borderRad4 flexcenter" >
+        <div @click="setRange" style="border:1px solid gray;" class="pad050 flex spacebetween borderRad4 flexcenter pointer" >
             <div>
                 <span style="color: gray" >{{label}}:</span> 
                 {{currentValue}}
             </div>
-            <div > <ard :show="setSliderVisibility" /> </div>
+            <div > <ard ref="ard" :show="setSliderVisibility" /> </div>
         </div>
-        <div 
-            v-if="showSlider"
-            :style="{background: 'white', boxShadow: '-1px 4px 9px 0px rgba(187,187,187,1)', top: '100%', zIndex:'100'}" 
-            class="absolute flex pad050 fullwidth borderRad4"
-            id="rsp" 
-        >
-            <div class="fullwidth flex pad025" >
-                <span class="marginright025" >
-                    <small>{{min}}</small>
-                </span>
-                <input
-                    style="z-index: 2" 
-                    v-model="currentValue" 
-                    id="rangeSlider" 
-                    class="margintop050 marginbottom025 fullwidth" 
-                    type="range" 
-                    :min="min" 
-                    :max="max"
-                >
-                <span class="marginleft025" >
-                    <small>{{max}}</small>
-                </span>
+        <transition name="fade">
+            <div 
+                v-if="showSlider"
+                :style="{background: 'white', boxShadow: '-1px 4px 9px 0px rgba(187,187,187,1)', top: '100%', zIndex: '0' }" 
+                class="absolute flex pad050 fullwidth borderRad4"
+            >
+                <div class="fullwidth flex pad025" >
+                    <span class="marginright025" >
+                        <small>{{min}}</small>
+                    </span>
+                    <input
+                        style="z-index: 2" 
+                        v-model="currentValue" 
+                        id="rangeSlider" 
+                        class="margintop050 marginbottom025 fullwidth" 
+                        type="range" 
+                        :min="min" 
+                        :max="max"
+                        @blur="blur"
+                    >
+                    <span class="marginleft025" >
+                        <small>{{max}}</small>
+                    </span>
+                </div>
             </div>
-        </div>
+        </transition>
     </main>
 </template>
 
@@ -43,16 +45,35 @@ export default {
         currentValue: 0,
         pointPos: undefined,
         mousePos: undefined,
-        showSlider: false
+        showSlider: false,
+        uid: undefined
     }),
     watch: {
         currentValue() {
             this.$emit('change',this.currentValue)
+        },
+        showSlider() {
+            if(this.showSlider) {
+                setTimeout(() => {
+                    const rangeSlider = document.getElementById('rangeSlider')
+                    rangeSlider.focus()
+                },0)
+            }
         }
     },
     methods: {
         setSliderVisibility(v) {
             this.showSlider = v
+        },
+        blur() {
+            this.$refs.ard.setStatus(false)
+        },
+        setRange() {
+            if(this.showSlider == true) {
+                // silence
+            } else {
+                this.$refs.ard.setStatus(true)
+            }
         }
     }
 }
@@ -86,5 +107,16 @@ export default {
     -webkit-box-shadow: 0px 0px 68px -28px rgba(0,0,0,0.75);
     -moz-box-shadow: 0px 0px 68px -28px rgba(0,0,0,0.75);
     box-shadow: 0px 0px 68px -28px rgba(0,0,0,0.75);
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 100ms;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}
+
+div:focus {
+    background-color: Aqua;
 }
 </style>
