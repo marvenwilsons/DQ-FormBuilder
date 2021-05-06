@@ -21,13 +21,14 @@
             }"
             >
         </div>
-        <div 
+        <div style="background: white;" class="pad125 margin125 borderRad4" >
+            <div 
             v-if="behaviorProperties.useGrouping == false" :is="'defaultLayout'" 
             :behaviorProperties="behaviorProperties"
             :appearanceProperties="appearanceProperties"
             :fieldItems="getFieldItems()"
             :style="appearanceProperties.hostContainerCss"
-            :class="appearanceProperties.hostContainerClasses"
+            :class="[...appearanceProperties.hostContainerClasses]"
             @onSubmit="submit"
             @onNextForm="onNextForm"
             :formMethods="{
@@ -42,6 +43,7 @@
                 getFieldItems
             }"
             >
+        </div>
         </div>
     </main>
 </template>

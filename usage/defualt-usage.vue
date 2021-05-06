@@ -11,13 +11,13 @@
                     background:'white',
                 },
                 hostContainerCss: {
-                    width: '350px',
+                    width: '450px',
                     background: 'white'
                 },
                 hostContainerClasses: ['margintop125','pad125','borderRad4']
             }"
             :fields="fields"
-        ></formBuilder>
+        />
         </div>
     </v-flex>
 </template>
@@ -57,7 +57,7 @@ export default {
         // console.log('hello world! this is pageContent')
         this.fields = [
             {
-                fieldLabel: 'username',
+                fieldLabel: 'Username',
                 fieldtype: 'string', // select, range, number, switch, multiselect, textarea
                 fieldDetails: 'type your username',
                 fieldId: '',
@@ -78,7 +78,7 @@ export default {
                 }                    
             },
             {
-                fieldLabel: 'password',
+                fieldLabel: 'Password',
                 fieldtype: 'password', // select, range, number, switch, multiselect, textarea
                 fieldDetails: 'Type your password',
                 fieldId: '',
@@ -105,7 +105,7 @@ export default {
                 }                    
             },
             {
-                fieldLabel: '',
+                fieldLabel: 'Age',
                 fieldtype: 'number', // select, range, number, switch, multiselect, textarea
                 fieldDetails: 'Type your age',
                 fieldId: '',

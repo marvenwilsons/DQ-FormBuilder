@@ -1,6 +1,6 @@
 <template>
-    <main style="padding:0;" class="flex flexcol borderRad4 relative">
-        <div @click="setRange" style="border:1px solid gray;" class="pad050 flex spacebetween borderRad4 flexcenter pointer" >
+    <main style="padding:0;" class="flex flexcol borderRad4 relative borderGray">
+        <div @click="setRange" class="padleft050 pad050 flex spacebetween borderRad4 flexcenter pointer" >
             <div>
                 <span style="color: gray" >{{label}}:</span> 
                 {{currentValue}}

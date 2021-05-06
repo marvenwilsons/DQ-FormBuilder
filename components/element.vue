@@ -17,18 +17,23 @@
         >
         </div>
         <!-- String -->
-        <section v-if="elementProperty.fieldtype == 'string'" >
-            <input
-                :placeholder="elementProperty.fieldDescription || elementProperty.fieldLabel"
-                :label="elementProperty.fieldLabel"
-                v-model="inputValue"
-                :hint="fieldDetails ? fieldDetails : elementProperty.fieldDetails"
-                :disabled="disableStatus"
-                :style="{background:bgColor}"
-                :loading="loadingStatus"
-                :id="myId"
-                :class="[classes, 'defaultBorder borderRad4 fullwidth pad050 borderGray']"
-            />
+        <section class="padbottom125" v-if="elementProperty.fieldtype == 'string'" >
+            <span class="inpLabel" >
+                <strong>{{elementProperty.fieldLabel}}</strong>
+            </span>
+            <div class="padtop050" >
+                <input
+                    :placeholder="elementProperty.fieldDescription || elementProperty.fieldLabel"
+                    :label="elementProperty.fieldLabel"
+                    v-model="inputValue"
+                    :hint="fieldDetails ? fieldDetails : elementProperty.fieldDetails"
+                    :disabled="disableStatus"
+                    :style="{background:bgColor}"
+                    :loading="loadingStatus"
+                    :id="myId"
+                    :class="[classes, 'defaultBorder borderRad4 fullwidth padInp borderGray dqfm_inp']"
+                />
+            </div>
             <span>
                 <!-- <p class="padleft050 err field-p" :style="{}" >
                     {{errorMsg ? errorMsg : elementProperty.fieldDetails}}
@@ -36,19 +41,24 @@
             </span>
         </section>
         <!-- Password -->
-        <section v-if="elementProperty.fieldtype == 'password'" >
-            <input
-                :placeholder="elementProperty.fieldDescription || elementProperty.fieldLabel"
-                :label="elementProperty.fieldLabel"
-                v-model="inputValue"
-                :hint="fieldDetails ? fieldDetails : elementProperty.fieldDetails"
-                :disabled="disableStatus"
-                :style="{background:bgColor}"
-                :loading="loadingStatus"
-                :id="myId"
-                type="password"
-                :class="[classes, 'defaultBorder borderRad4 fullwidth pad050 borderGray']"
-            />
+        <section class="padbottom125" v-if="elementProperty.fieldtype == 'password'" >
+            <span class="inpLabel" >
+                <strong>{{elementProperty.fieldLabel}}</strong>
+            </span>
+            <div class="padtop050" >
+                <input
+                    :placeholder="elementProperty.fieldDescription || elementProperty.fieldLabel"
+                    :label="elementProperty.fieldLabel"
+                    v-model="inputValue"
+                    :hint="fieldDetails ? fieldDetails : elementProperty.fieldDetails"
+                    :disabled="disableStatus"
+                    :style="{background:bgColor}"
+                    :loading="loadingStatus"
+                    :id="myId"
+                    type="password"
+                    :class="[classes, 'defaultBorder borderRad4 fullwidth padInp borderGray']"
+                />
+            </div>
             <span>
                 <!-- <p class="padleft050 err field-p" :style="{}" >
                     {{errorMsg ? errorMsg : elementProperty.fieldDetails}}
@@ -57,22 +67,27 @@
         </section>
         
         <!-- textarea -->
-        <div v-if="elementProperty.fieldtype == 'textarea'" >
-            <textarea
-                outlined
-                v-if="elementProperty.fieldtype == 'textarea'"
-                :placeholder="elementProperty.fieldDescription"
-                :label="elementProperty.fieldLabel"
-                v-model="inputValue"
-                :hide-details="elementProperty.fieldDetails == undefined"
-                :hint="fieldDetails ? fieldDetails : elementProperty.fieldDetails"
-                :error-messages="errorMsg"
-                :disabled="disableStatus"
-                :style="{background:bgColor}"
-                :loading="loadingStatus"
-                :id="myId"
-                :class="[classes, 'defaultBorder fullwidth pad050 borderRad4 borderGray']"
-            />
+        <div class="padbottom125" v-if="elementProperty.fieldtype == 'textarea'" >
+            <span class="inpLabel" >
+                <strong>{{elementProperty.fieldLabel}}</strong>
+            </span>
+            <div class="margintop050" >
+                <textarea
+                    outlined
+                    v-if="elementProperty.fieldtype == 'textarea'"
+                    :placeholder="elementProperty.fieldDescription"
+                    :label="elementProperty.fieldLabel"
+                    v-model="inputValue"
+                    :hide-details="elementProperty.fieldDetails == undefined"
+                    :hint="fieldDetails ? fieldDetails : elementProperty.fieldDetails"
+                    :error-messages="errorMsg"
+                    :disabled="disableStatus"
+                    :style="{background:bgColor}"
+                    :loading="loadingStatus"
+                    :id="myId"
+                    :class="[classes, 'defaultBorder fullwidth padInp borderRad4 borderGray']"
+                />
+            </div>
             <span>
                 <!-- <p class="padleft050 err field-p" :style="{}" >
                     {{errorMsg ? errorMsg : elementProperty.fieldDetails}}
@@ -80,8 +95,11 @@
             </span>
         </div>
         <!-- number -->
-        <div class="overflowhidden" v-if="elementProperty.fieldtype == 'number'" >
-            <div class="defaultBorder borderRad4 relative flex overflowhidden flexcenter borderGray" >
+        <div class="overflowhidden padbottom125" v-if="elementProperty.fieldtype == 'number'" >
+            <span class="inpLabel" >
+                <strong>{{elementProperty.fieldLabel}}</strong>
+            </span>
+            <div class="defaultBorder borderRad4 relative flex overflowhidden flexcenter borderGray margintop050" >
                 <div v-if="elementProperty.appendText" class="fullheight-percent flex flexcenter padleft050" >
                     {{elementProperty.appendText}}
                 </div>
@@ -97,7 +115,7 @@
                     :style="{background:bgColor}"
                     :loading="loadingStatus"
                     :id="myId"
-                    :class="[classes, 'fullwidth pad050 borderRad4 ']"
+                    :class="[classes, 'fullwidth padInp borderRad4 ']"
 
                 />
             </div>
@@ -122,7 +140,7 @@
                 @change="(value) => inputValue = value"
             />
             <span>
-                <p class="padleft050 err field-p" :style="{}" >
+                <p class="padtop025 padleft025 err field-p" :style="{}" >
                     {{errorMsg ? errorMsg : elementProperty.fieldDetails}}
                 </p>
             </span>
@@ -140,31 +158,38 @@
                 @change="(value) => inputValue = value"
             />
             <span>
-                <p class="padleft050 err field-p" :style="{}" >
+                <p class="padtop025 err field-p" :style="{}" >
                     {{errorMsg ? errorMsg : elementProperty.fieldDetails}}
                 </p>
             </span>
         </section>
         
         <!-- TODO: select -->
-        <v-select
-            small-chips
-            dense
-            v-if="elementProperty.fieldtype == 'select'"
-            outlined
-            :label="elementProperty.fieldLabel"
-            :items="dataSet"
-            v-model="inputValue"
-            persistent-hint
-            :hint="fieldDetails ? fieldDetails : elementProperty.fieldDetails"
-            :error-messages="errorMsg"
-            :disabled="disableStatus"
-            :style="{background:bgColor}"
-            :loading="loadingStatus"
-            :id="myId"
-            :class="classes"
-        >
-        </v-select>
+        <section v-if="elementProperty.fieldtype == 'select'" >
+            <span class="inpLabel" >
+                <strong>{{elementProperty.fieldLabel}}</strong>
+            </span>
+            <div class="margintop050" >
+                <v-select
+                    small-chips
+                    dense
+                    
+                    outlined
+                    :label="elementProperty.fieldLabel"
+                    :items="dataSet"
+                    v-model="inputValue"
+                    persistent-hint
+                    :hint="fieldDetails ? fieldDetails : elementProperty.fieldDetails"
+                    :error-messages="errorMsg"
+                    :disabled="disableStatus"
+                    :style="{background:bgColor}"
+                    :loading="loadingStatus"
+                    :id="myId"
+                    :class="classes"
+                >
+                </v-select>
+            </div>
+        </section>
         <!-- TODO: multiselect -->
         <v-autocomplete
             small-chips
@@ -361,7 +386,12 @@ export default {
 .borderGray{
     border: 1px solid lightgray;
 }
- 
-
-</style>
+.inpLabel {
+    color: #3c4257 !important;
+    font-weight: 400;
+}
+.dqfm_inp::selection{
+    outline: lightgreen;
+}
+ </style>
 ```
