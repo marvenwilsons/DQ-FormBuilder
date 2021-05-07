@@ -12,7 +12,10 @@
                         {{item.unicode}}
                     </div>
                     <div class="flex flexcenter flexstart" > 
-                        <input :checked="selected.includes(item.text) ? true : false" class="marginright050" type="checkbox">  
+                        <SvgCheckBox 
+                            :isChecked="selected.includes(item.text) ? true : false"
+                            class="marginright050"
+                        />
                         {{item.text}}
                     </div>
                 </div>
@@ -22,7 +25,9 @@
 </template>
 
 <script>
+import SvgCheckBox from './_svg-checkbox'
 export default {
+    components: {SvgCheckBox},
     props: ['list','selected']
 }
 </script>

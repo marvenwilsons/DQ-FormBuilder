@@ -1,9 +1,6 @@
-# vault 1
-
-```html
 <template>
     <div v-if="hideStatus == false" 
-        :class="[...appearanceProperties.fieldElementClasses]" 
+        :class="[...appearanceProperties.fieldElementClasses, '']" 
         :style="{...appearanceProperties.fieldElementCss}"
       > 
        <!-- Custom -->
@@ -164,32 +161,19 @@
             </span>
         </section>
         
-        <!-- TODO: select -->
-        <section v-if="elementProperty.fieldtype == 'select'" >
+        <!-- select -->
+        <section class="padbottom125" v-if="elementProperty.fieldtype == 'select'" >
             <span class="inpLabel" >
                 <strong>{{elementProperty.fieldLabel}}</strong>
             </span>
             <div class="margintop050" >
-                <!-- <v-select
-                    small-chips
-                    dense
-                    
-                    outlined
+                <MySelect
                     :label="elementProperty.fieldLabel"
-                    :items="dataSet"
-                    v-model="inputValue"
-                    persistent-hint
-                    :hint="fieldDetails ? fieldDetails : elementProperty.fieldDetails"
-                    :error-messages="errorMsg"
-                    :disabled="disableStatus"
+                    :mode="'single'"
+                    desc=""
                     :style="{background:bgColor}"
-                    :loading="loadingStatus"
                     :id="myId"
                     :class="classes"
-                >
-                </v-select> -->
-                <MySelect
-                    :mode="'single'"
                     :options="[
                         {img: '', unicode:'' ,text: 'foo'},
                         {img: '', unicode:'' ,text: 'bar'},
@@ -200,27 +184,22 @@
             </div>
         </section>
         <!-- TODO: multiselect -->
-        <v-autocomplete
-            small-chips
-            dense
-            v-if="elementProperty.fieldtype == 'multiselect'"
-            v-model="inputValue"
-            :items="dataSet"
-            chips
-            :label="elementProperty.fieldLabel"
-            full-width
-            multiple
-            :hint="fieldDetails ? fieldDetails : elementProperty.fieldDetails"
-            persistent-hint
-            single-line
-            outlined
-            :error-messages="errorMsg"
-            :disabled="disableStatus"
-            :style="{background:bgColor}"
-            :loading="loadingStatus"
-            :id="myId"
-            :class="classes"
-        ></v-autocomplete>
+        <section class="padbottom125" v-if="elementProperty.fieldtype == 'multiselect'" >
+            <span class="inpLabel" >
+                <strong>{{elementProperty.fieldLabel}}</strong>
+            </span>
+            <div class="margintop050" >
+                <MySelect
+                    :mode="'multi'"
+                    :options="[
+                        {img: '', unicode:'' ,text: 'foo'},
+                        {img: '', unicode:'' ,text: 'bar'},
+                        {img: '', unicode:'' ,text: 'baz'},
+                        {img: '', unicode:'' ,text: 'ben'},
+                    ]"
+                ></MySelect>
+            </div>
+        </section>
     </div>
 </template>
 

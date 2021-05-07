@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="borderred" >
         <div 
             v-for="(item, item_idex) in fieldItems" 
             :key="item_idex" >
@@ -13,11 +13,8 @@
             </div>
         </div>
         <div class="padleft050 padright050 padtop125 padbottom125 flex flexend" >
-            <!-- <v-btn class="fullwidth" :loading="isLoading" @click="getElementValue" color="primary" >
-                submit
-            </v-btn> -->
             <button class="dq-button fullwidth pad050" style="background: #5a8ab9; color: white; boxShadow: -1px 4px 9px 0px rgba(187,187,187,1);" >
-                Create Account
+                Submit
             </button>
         </div>
     </div>
