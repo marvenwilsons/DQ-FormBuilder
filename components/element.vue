@@ -120,9 +120,9 @@
                 />
             </div>
             <span>
-                <!-- <p class="padleft050 err field-p" :style="{}" >
+                <p class="padleft050 err field-p" :style="{}" >
                     {{errorMsg ? errorMsg : elementProperty.fieldDetails}}
-                </p> -->
+                </p>
             </span>
         </div>
         <!-- range slider -->
@@ -158,7 +158,7 @@
                 @change="(value) => inputValue = value"
             />
             <span>
-                <p class="padtop025 err field-p" :style="{}" >
+                <p class="padtop050 err field-p" :style="{}" >
                     {{errorMsg ? errorMsg : elementProperty.fieldDetails}}
                 </p>
             </span>
@@ -170,7 +170,7 @@
                 <strong>{{elementProperty.fieldLabel}}</strong>
             </span>
             <div class="margintop050" >
-                <v-select
+                <!-- <v-select
                     small-chips
                     dense
                     
@@ -187,7 +187,16 @@
                     :id="myId"
                     :class="classes"
                 >
-                </v-select>
+                </v-select> -->
+                <MySelect
+                    :mode="'single'"
+                    :options="[
+                        {img: '', unicode:'' ,text: 'foo'},
+                        {img: '', unicode:'' ,text: 'bar'},
+                        {img: '', unicode:'' ,text: 'baz'},
+                        {img: '', unicode:'' ,text: 'ben'},
+                    ]"
+                ></MySelect>
             </div>
         </section>
         <!-- TODO: multiselect -->
@@ -218,8 +227,9 @@
 <script>
 import RangeSlider from './range-slider'
 import MySwitch from './switch'
+import MySelect from './select'
 export default {
-    components: {RangeSlider, MySwitch},
+    components: {RangeSlider, MySwitch, MySelect},
     props: ['elementProperty','appearanceProperties','formMethods','hostMethods'],
     data: () => ({
         inputValue: undefined,

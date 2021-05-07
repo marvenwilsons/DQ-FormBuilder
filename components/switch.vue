@@ -1,7 +1,7 @@
 <template>
     <main class="flex spacebetween" >
         <div class="" >
-            {{label}}
+            <strong>{{label}}</strong>
         </div>
         <div @click="state = !state"  class="flex flexend relative pointer" >
             <div id="fm-switch-container" 
