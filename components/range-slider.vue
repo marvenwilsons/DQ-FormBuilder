@@ -1,10 +1,11 @@
 <template>
-    <main :style="{padding:'0', boxShadow: showSlider ? `0 0 5pt 1pt ${appearance.activeOutlineColor}` : ''}" 
-    class="flex flexcol borderRad4 relative borderGray">
+    <main class="flex flexcol relative">
         <div @click="setRange" class="padleft050 pad050 flex spacebetween borderRad4 flexcenter pointer" >
             <div>
-                <span style="color: gray" >{{label}}:</span> 
-                {{currentValue}}
+                <span style="color: gray" >{{label}}</span> 
+                <span class="padleft050" >
+                    {{currentValue}}
+                </span>
             </div>
             <div > <ard ref="ard" :state="showSlider" :show="setRange" /> </div>
         </div>
@@ -58,6 +59,7 @@ export default {
                 setTimeout(() => {
                     const rangeSlider = document.getElementById('rangeSlider')
                     rangeSlider.focus()
+                    this.$emit('focus')
                 },0)
             }
         }
@@ -68,6 +70,7 @@ export default {
         },
         blur() {
             this.$refs.ard.setStatus(false)
+            this.$emit('blur')
         },
         setRange() {
             this.showSlider = !this.showSlider

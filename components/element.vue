@@ -15,129 +15,78 @@
         </div>
         <!-- String -->
         <section class="padbottom125" v-if="elementProperty.fieldtype == 'string'" >
-            <span class="inpLabel" >
-                <strong>{{elementProperty.fieldLabel}}</strong>
-            </span>
-            <div class="padtop050" >
-                <input
-                    :placeholder="elementProperty.fieldDescription || elementProperty.fieldLabel"
-                    :label="elementProperty.fieldLabel"
-                    v-model="inputValue"
-                    :hint="fieldDetails ? fieldDetails : elementProperty.fieldDetails"
-                    :disabled="disableStatus"
-                    :style="{background:bgColor}"
-                    :loading="loadingStatus"
-                    :id="myId"
-                    :class="[classes, 'defaultBorder borderRad4 fullwidth padInp borderGray dqfm_inp']"
-                />
-            </div>
-            <span>
-                <!-- <p class="padleft050 err field-p" :style="{}" >
-                    {{errorMsg ? errorMsg : elementProperty.fieldDetails}}
-                </p> -->
-            </span>
+            <MyInputWrapper :el="elementProperty"  >
+                <template #wrapper="{setFucos}" >
+                    <input
+                        v-model="inputValue"
+                        :class="[classes, 'fullwidth padInp']"
+                        @focus="setFucos(true,activeOutlineColor)"
+                        @blur="setFucos(false)" 
+                    />
+                </template>
+            </MyInputWrapper>
         </section>
         <!-- Password -->
         <section class="padbottom125" v-if="elementProperty.fieldtype == 'password'" >
-            <span class="inpLabel" >
-                <strong>{{elementProperty.fieldLabel}}</strong>
-            </span>
-            <div class="padtop050" >
-                <input
-                    :placeholder="elementProperty.fieldDescription || elementProperty.fieldLabel"
-                    :label="elementProperty.fieldLabel"
-                    v-model="inputValue"
-                    :hint="fieldDetails ? fieldDetails : elementProperty.fieldDetails"
-                    :disabled="disableStatus"
-                    :style="{background:bgColor}"
-                    :loading="loadingStatus"
-                    :id="myId"
-                    type="password"
-                    :class="[classes, 'defaultBorder borderRad4 fullwidth padInp borderGray']"
-                />
-            </div>
-            <span>
-                <!-- <p class="padleft050 err field-p" :style="{}" >
-                    {{errorMsg ? errorMsg : elementProperty.fieldDetails}}
-                </p> -->
-            </span>
+            <MyInputWrapper :el="elementProperty"  >
+                <template #wrapper="{setFucos}" >
+                    <input
+                        v-model="inputValue"
+                        :class="[classes, 'fullwidth padInp']"
+                        type="password"
+                        @focus="setFucos(true,activeOutlineColor)"
+                        @blur="setFucos(false)" 
+                    />
+                </template>
+            </MyInputWrapper>
         </section>        
         <!-- textarea -->
-        <div class="padbottom125" v-if="elementProperty.fieldtype == 'textarea'" >
-            <span class="inpLabel" >
-                <strong>{{elementProperty.fieldLabel}}</strong>
-            </span>
-            <div class="margintop050" >
-                <MyInputWrapper>
-                    <template #wrapper="{setFucos}" >
-                        <textarea
-                            outlined
-                            v-if="elementProperty.fieldtype == 'textarea'"
-                            :placeholder="elementProperty.fieldDescription"
-                            :label="elementProperty.fieldLabel"
-                            v-model="inputValue"
-                            :error-messages="errorMsg"
-                            :disabled="disableStatus"
-                            :style="{minHeight:'150px'}"
-                            :loading="loadingStatus"
-                            :id="myId"
-                            :class="[classes, 'fullwidth padInp']"
-                            @focus="setFucos(true,'#cbd7e4')"
-                            @blur="setFucos(false)"
-                        />
-                    </template>
-                </MyInputWrapper>
-                
-            </div>
-            <span>
-                <!-- <p class="padleft050 err field-p" :style="{}" >
-                    {{errorMsg ? errorMsg : elementProperty.fieldDetails}}
-                </p> -->
-            </span>
-        </div>
+        <section class="padbottom125" v-if="elementProperty.fieldtype == 'textarea'" >
+            <MyInputWrapper :el="elementProperty" >
+                <template #wrapper="{setFucos}" >
+                    <textarea
+                        v-model="inputValue"
+                        :style="{minHeight:'150px'}"
+                        :class="[classes, 'fullwidth padInp']"
+                        @focus="setFucos(true,activeOutlineColor)"
+                        @blur="setFucos(false)"
+                    />
+                </template>
+            </MyInputWrapper>
+        </section>
         <!-- number -->
-        <div class=" padbottom125" v-if="elementProperty.fieldtype == 'number'" >
-            <span class="inpLabel" >
-                <strong>{{elementProperty.fieldLabel}}</strong>
-            </span>
-            <div class="borderRad4 relative flex flexcenter margintop050" >
-                <MyNumber
-                    :class="[classes, 'fullwidth padInp borderRad4']"
-                    :appendText="elementProperty.appendText"
-                    :appearance="{
-                        activeOutlineColor: '#cbd7e4'
-                    }"
-                    @change="(v) => inputValue = v"
-                ></MyNumber>
-            </div>
-            <span>
-                <p class="padleft025 padtop050 err field-p" :style="{}" >
-                    {{errorMsg ? errorMsg : elementProperty.fieldDetails}}
-                </p>
-            </span>
-        </div>
-        <!-- range slider -->
+        <section class=" padbottom125" v-if="elementProperty.fieldtype == 'number'" >
+            <MyInputWrapper :el="elementProperty" >
+                <template #wrapper="{setFucos}" >
+                    <MyNumber
+                        :class="[classes, 'fullwidth padInp borderRad4']"
+                        :appendText="elementProperty.appendText"
+                        :appearance="{
+                            activeOutlineColor: activeOutlineColor
+                        }"
+                        @focus="setFucos(true,activeOutlineColor)"
+                        @blur="setFucos(false)"
+                        @change="(v) => inputValue = v"
+                    />
+                </template>
+            </MyInputWrapper>
+        </section>
+        <!-- range slider
+            TODO:
+                1. min and max is static, make it bind
+         -->
         <section v-if="elementProperty.fieldtype == 'range'">
-            <RangeSlider 
-                :error-messages="errorMsg"
-                :loading="loadingStatus"
-                :style="{background:bgColor}"
-                :id="myId"
-                :class="[classes, 'fullwidth padtop025 padbottom025 borderRad4']"
-                :disabled="disableStatus"
-                :label="elementProperty.fieldLabel"
-                :min="dataSet && dataSet.min ? dataSet.min : 20"
-                :max="dataSet && dataSet.max ? dataSet.max : 100"
-                :appearance="{
-                    activeOutlineColor: '#cbd7e4'
-                }"
-                @change="(value) => inputValue = value"
-            />
-            <span>
-                <p class="padtop025 padleft025 err field-p" :style="{}" >
-                    {{errorMsg ? errorMsg : elementProperty.fieldDetails}}
-                </p>
-            </span>
+            <MyInputWrapper :el="elementProperty" >
+                <template #wrapper="{setFucos}" >
+                    <RangeSlider 
+                        :min="dataSet && dataSet.min ? dataSet.min : 20"
+                        :max="dataSet && dataSet.max ? dataSet.max : 100"
+                        @change="(value) => inputValue = value"
+                        @focus="setFucos(true,activeOutlineColor)"
+                        @blur="setFucos(false)"
+                    />
+                </template>
+            </MyInputWrapper>
         </section>
         <!-- switch -->
         <section v-if="elementProperty.fieldtype == 'switch'" >
@@ -152,46 +101,44 @@
                 @change="(value) => inputValue = value"
             />
             <span>
-                <p class="padtop050 err field-p" :style="{}" >
+                <p class="padtop050 err field-p" >
                     {{errorMsg ? errorMsg : elementProperty.fieldDetails}}
                 </p>
             </span>
         </section>        
         <!-- select -->
         <section class="padbottom125" v-if="elementProperty.fieldtype == 'select'" >
-            <span class="inpLabel" >
-                <strong>{{elementProperty.fieldLabel}}</strong>
-            </span>
-            <div class="margintop050" >
-                <MySelect
-                    :label="elementProperty.fieldLabel"
-                    :mode="'single'"
-                    desc=""
-                    :style="{background:bgColor}"
-                    :id="myId"
-                    :class="classes"
-                    :defaultValue="elementProperty.defaultValue"
-                    :options="elementProperty.dataSet"
-                ></MySelect>
-            </div>
+            <MyInputWrapper :el="elementProperty" >
+                <template #wrapper="{setFucos}" >
+                    <MySelect
+                        :label="elementProperty.fieldLabel"
+                        :mode="'single'"
+                        :style="{background:bgColor}"
+                        :class="classes"
+                        :defaultValue="elementProperty.defaultValue"
+                        :options="elementProperty.dataSet"
+                        @focus="setFucos(true,activeOutlineColor)"
+                        @blur="setFucos(false)"
+                    ></MySelect>
+                </template>
+            </MyInputWrapper>
         </section>
         <!-- multiselect -->
         <section class="padbottom125" v-if="elementProperty.fieldtype == 'multiselect'" >
-            <span class="inpLabel" >
-                <strong>{{elementProperty.fieldLabel}}</strong>
-            </span>
-            <div class="margintop050" >
-                <MySelect
-                    :mode="'multi'"
-                    :defaultValue="elementProperty.defaultValue"
-                    :options="[
-                        {img: '', unicode:'' ,text: 'foo'},
-                        {img: '', unicode:'' ,text: 'bar'},
-                        {img: '', unicode:'' ,text: 'baz'},
-                        {img: '', unicode:'' ,text: 'ben'},
-                    ]"
-                ></MySelect>
-            </div>
+            <MyInputWrapper :el="elementProperty" >
+                <template #wrapper="{setFucos}" >
+                    <MySelect
+                        :label="elementProperty.fieldLabel"
+                        :mode="'multi'"
+                        :style="{background:bgColor}"
+                        :class="classes"
+                        :defaultValue="elementProperty.defaultValue"
+                        :options="elementProperty.dataSet"
+                        @focus="setFucos(true,activeOutlineColor)"
+                        @blur="setFucos(false)"
+                    ></MySelect>
+                </template>
+            </MyInputWrapper>
         </section>
         <!-- autocomplete -->
         <!-- autocomplete countries -->
@@ -210,6 +157,8 @@ export default {
     components: {RangeSlider, MySwitch, MySelect, MyNumber,MyInputWrapper},
     props: ['elementProperty','appearanceProperties','formMethods','hostMethods',],
     data: () => ({
+        activeOutlineColor: '#cbd7e4',
+
         inputValue: undefined,
         dataSet: undefined,
         args: undefined,
@@ -377,9 +326,6 @@ export default {
 .inpLabel {
     color: #3c4257 !important;
     font-weight: 400;
-}
-.dqfm_inp::selection{
-    outline: lightgreen;
 }
  </style>
 ```

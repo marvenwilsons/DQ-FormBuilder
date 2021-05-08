@@ -1,5 +1,5 @@
 <template>
-    <main class="flex flexcol borderRad4 relative borderGray">
+    <main class="flex flexcol borderRad4 relative">
         <!--  -->
         <section style="min-height:40px;" @click="toggle" class="padleft050 padtop025 padright050 flex spacebetween borderRad4 flexcenter pointer" >
             <div class="flex flexwrap" >
@@ -57,14 +57,15 @@ export default {
             this.showMenu = v
         },
         toggle() {
-            console.log('clicked!')
             this.showMenu = !this.showMenu
-        },
-        test() {
-            console.log('test')
+
+            if(this.showMenu) {
+                this.$emit('focus')
+            } else {
+                this.$emit('blur')
+            }
         },
         itemSelected(e) {
-            console.log('hey')
             this.showMenu = false
 
             if(this.currentValue.includes(e)) {

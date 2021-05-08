@@ -68,13 +68,13 @@ export default {
                 },
                 onInput: (element,form,error) => {
                     // validation
-                    element.value == 'foo' ? error('this is an error') : element.removeError()
+                    // element.value == 'foo' ? error('this is an error') : element.removeError()
                     // hide
-                    element.value == 'hide' && element.hide()
+                    // element.value == 'hide' && element.hide()
                     // addClass
-                    element.value == 'borderred' ? element.addClass(element.value) : element.removeClass('borderred')
+                    // element.value == 'borderred' ? element.addClass(element.value) : element.removeClass('borderred')
                     // mutate an input
-                    form.password.setFieldDetails(`Set password for ${element.value}`)
+                    // form.password.setFieldDetails(`Set password for ${element.value}`)
                 }                    
             },
             {

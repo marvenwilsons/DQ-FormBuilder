@@ -1,13 +1,12 @@
 <template>
-    <div :style="{boxShadow: isFucos ? `0 0 5pt 1pt ${appearance.activeOutlineColor}` : ''}"  
-        class="borderGray fullwidth flex" >
+    <div class="fullwidth flex" >
         <div v-if="appendText" class="fullheight-percent flex flexcenter padleft050" >
             {{appendText}}
         </div>
         <input 
             class="fullwidth padleft050" type="number"
-            @focus="isFucos = true"
-            @blur="isFucos = false"
+            @focus="$emit('focus')"
+            @blur="$emit('blur')"
             v-model="val"
             @change="$emit('change',val)"
         />
@@ -18,7 +17,6 @@
 export default {
     props: ['appearance','appendText','defaultValue'],
     data:() => ({
-        isFucos: false,
         val: undefined
     }),
     created() {
