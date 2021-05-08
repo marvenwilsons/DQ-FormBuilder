@@ -46,7 +46,7 @@ import ListComp from './list-comp'
 import SvgClose from './_svg-close-circle-outline'
 
 export default {
-    props: ['options','label','mode'],
+    props: ['options','label','mode','defaultValue'],
     components: {ard,ListComp, SvgClose},
     data: () => ({
         currentValue: [],
@@ -78,6 +78,13 @@ export default {
                 }
             }
         }
+    },
+    mounted() {
+        setTimeout(() => {
+            this.defaultValue.map(e => {
+                this.currentValue.push(e.text)
+            })
+        },0)
     }
 }
 </script>

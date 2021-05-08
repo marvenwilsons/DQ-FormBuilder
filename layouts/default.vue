@@ -1,5 +1,5 @@
 <template>
-    <div class="borderred" >
+    <div class="" >
         <div 
             v-for="(item, item_idex) in fieldItems" 
             :key="item_idex" >

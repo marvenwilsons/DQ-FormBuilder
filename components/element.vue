@@ -61,29 +61,33 @@
                     {{errorMsg ? errorMsg : elementProperty.fieldDetails}}
                 </p> -->
             </span>
-        </section>
-        
+        </section>        
         <!-- textarea -->
         <div class="padbottom125" v-if="elementProperty.fieldtype == 'textarea'" >
             <span class="inpLabel" >
                 <strong>{{elementProperty.fieldLabel}}</strong>
             </span>
             <div class="margintop050" >
-                <textarea
-                    outlined
-                    v-if="elementProperty.fieldtype == 'textarea'"
-                    :placeholder="elementProperty.fieldDescription"
-                    :label="elementProperty.fieldLabel"
-                    v-model="inputValue"
-                    :hide-details="elementProperty.fieldDetails == undefined"
-                    :hint="fieldDetails ? fieldDetails : elementProperty.fieldDetails"
-                    :error-messages="errorMsg"
-                    :disabled="disableStatus"
-                    :style="{background:bgColor}"
-                    :loading="loadingStatus"
-                    :id="myId"
-                    :class="[classes, 'defaultBorder fullwidth padInp borderRad4 borderGray']"
-                />
+                <MyInputWrapper>
+                    <template #wrapper="{setFucos}" >
+                        <textarea
+                            outlined
+                            v-if="elementProperty.fieldtype == 'textarea'"
+                            :placeholder="elementProperty.fieldDescription"
+                            :label="elementProperty.fieldLabel"
+                            v-model="inputValue"
+                            :error-messages="errorMsg"
+                            :disabled="disableStatus"
+                            :style="{minHeight:'150px'}"
+                            :loading="loadingStatus"
+                            :id="myId"
+                            :class="[classes, 'fullwidth padInp']"
+                            @focus="setFucos(true,'#cbd7e4')"
+                            @blur="setFucos(false)"
+                        />
+                    </template>
+                </MyInputWrapper>
+                
             </div>
             <span>
                 <!-- <p class="padleft050 err field-p" :style="{}" >
@@ -92,32 +96,22 @@
             </span>
         </div>
         <!-- number -->
-        <div class="overflowhidden padbottom125" v-if="elementProperty.fieldtype == 'number'" >
+        <div class=" padbottom125" v-if="elementProperty.fieldtype == 'number'" >
             <span class="inpLabel" >
                 <strong>{{elementProperty.fieldLabel}}</strong>
             </span>
-            <div class="defaultBorder borderRad4 relative flex overflowhidden flexcenter borderGray margintop050" >
-                <div v-if="elementProperty.appendText" class="fullheight-percent flex flexcenter padleft050" >
-                    {{elementProperty.appendText}}
-                </div>
-                <input
-                    outlined
-                    :placeholder="elementProperty.fieldLabel"
-                    v-model="inputValue"
-                    :hide-details="elementProperty.fieldDetails == undefined"
-                    :hint="fieldDetails ? fieldDetails : elementProperty.fieldDetails"
-                    type="number"
-                    :error-messages="errorMsg"
-                    :disabled="disableStatus"
-                    :style="{background:bgColor}"
-                    :loading="loadingStatus"
-                    :id="myId"
-                    :class="[classes, 'fullwidth padInp borderRad4 ']"
-
-                />
+            <div class="borderRad4 relative flex flexcenter margintop050" >
+                <MyNumber
+                    :class="[classes, 'fullwidth padInp borderRad4']"
+                    :appendText="elementProperty.appendText"
+                    :appearance="{
+                        activeOutlineColor: '#cbd7e4'
+                    }"
+                    @change="(v) => inputValue = v"
+                ></MyNumber>
             </div>
             <span>
-                <p class="padleft050 err field-p" :style="{}" >
+                <p class="padleft025 padtop050 err field-p" :style="{}" >
                     {{errorMsg ? errorMsg : elementProperty.fieldDetails}}
                 </p>
             </span>
@@ -134,6 +128,9 @@
                 :label="elementProperty.fieldLabel"
                 :min="dataSet && dataSet.min ? dataSet.min : 20"
                 :max="dataSet && dataSet.max ? dataSet.max : 100"
+                :appearance="{
+                    activeOutlineColor: '#cbd7e4'
+                }"
                 @change="(value) => inputValue = value"
             />
             <span>
@@ -159,8 +156,7 @@
                     {{errorMsg ? errorMsg : elementProperty.fieldDetails}}
                 </p>
             </span>
-        </section>
-        
+        </section>        
         <!-- select -->
         <section class="padbottom125" v-if="elementProperty.fieldtype == 'select'" >
             <span class="inpLabel" >
@@ -174,16 +170,12 @@
                     :style="{background:bgColor}"
                     :id="myId"
                     :class="classes"
-                    :options="[
-                        {img: '', unicode:'' ,text: 'foo'},
-                        {img: '', unicode:'' ,text: 'bar'},
-                        {img: '', unicode:'' ,text: 'baz'},
-                        {img: '', unicode:'' ,text: 'ben'},
-                    ]"
+                    :defaultValue="elementProperty.defaultValue"
+                    :options="elementProperty.dataSet"
                 ></MySelect>
             </div>
         </section>
-        <!-- TODO: multiselect -->
+        <!-- multiselect -->
         <section class="padbottom125" v-if="elementProperty.fieldtype == 'multiselect'" >
             <span class="inpLabel" >
                 <strong>{{elementProperty.fieldLabel}}</strong>
@@ -191,6 +183,7 @@
             <div class="margintop050" >
                 <MySelect
                     :mode="'multi'"
+                    :defaultValue="elementProperty.defaultValue"
                     :options="[
                         {img: '', unicode:'' ,text: 'foo'},
                         {img: '', unicode:'' ,text: 'bar'},
@@ -200,6 +193,10 @@
                 ></MySelect>
             </div>
         </section>
+        <!-- autocomplete -->
+        <!-- autocomplete countries -->
+        <!-- CheckBox -->
+        <!-- Radio -->
     </div>
 </template>
 
@@ -207,9 +204,11 @@
 import RangeSlider from './range-slider'
 import MySwitch from './switch'
 import MySelect from './select'
+import MyNumber from './number'
+import MyInputWrapper from './input-wrapper'
 export default {
-    components: {RangeSlider, MySwitch, MySelect},
-    props: ['elementProperty','appearanceProperties','formMethods','hostMethods'],
+    components: {RangeSlider, MySwitch, MySelect, MyNumber,MyInputWrapper},
+    props: ['elementProperty','appearanceProperties','formMethods','hostMethods',],
     data: () => ({
         inputValue: undefined,
         dataSet: undefined,

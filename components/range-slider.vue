@@ -1,16 +1,17 @@
 <template>
-    <main style="padding:0;" class="flex flexcol borderRad4 relative borderGray">
+    <main :style="{padding:'0', boxShadow: showSlider ? `0 0 5pt 1pt ${appearance.activeOutlineColor}` : ''}" 
+    class="flex flexcol borderRad4 relative borderGray">
         <div @click="setRange" class="padleft050 pad050 flex spacebetween borderRad4 flexcenter pointer" >
             <div>
                 <span style="color: gray" >{{label}}:</span> 
                 {{currentValue}}
             </div>
-            <div > <ard ref="ard" :show="setSliderVisibility" /> </div>
+            <div > <ard ref="ard" :state="showSlider" :show="setRange" /> </div>
         </div>
         <transition name="fade">
             <div 
                 v-if="showSlider"
-                :style="{background: 'white', boxShadow: '-1px 4px 9px 0px rgba(187,187,187,1)', top: '100%', zIndex: '0' }" 
+                :style="{background: 'white', boxShadow: '-1px 4px 9px 0px rgba(187,187,187,1)', top: '104%', zIndex: '0' }" 
                 class="absolute flex pad050 fullwidth borderRad4"
             >
                 <div class="fullwidth flex pad025" >
@@ -39,7 +40,7 @@
 <script>
 import ard from './ard.vue'
 export default {
-    props: ['min','max','label'],
+    props: ['min','max','label', 'appearance'],
     components: {ard},
     data: () => ({
         currentValue: 0,
@@ -69,11 +70,7 @@ export default {
             this.$refs.ard.setStatus(false)
         },
         setRange() {
-            if(this.showSlider == true) {
-                // silence
-            } else {
-                this.$refs.ard.setStatus(true)
-            }
+            this.showSlider = !this.showSlider
         }
     }
 }
@@ -114,9 +111,5 @@ export default {
 }
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
   opacity: 0;
-}
-
-div:focus {
-    background-color: Aqua;
 }
 </style>

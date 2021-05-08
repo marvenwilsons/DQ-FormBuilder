@@ -21,7 +21,7 @@
             }"
             >
         </div>
-        <div style="background: white;" class="pad125 margin125 borderRad4" >
+        <div style="background: white;" class="margin125 pad125 borderRad4" >
             <div 
             v-if="behaviorProperties.useGrouping == false" :is="'defaultLayout'" 
             :behaviorProperties="behaviorProperties"
@@ -84,7 +84,7 @@ export default {
                         if(isValidMode) {
                             return this.behavior.fieldRenderingMode
                         } else {
-                            this.systemError(`FormBuilder Error: Invalid fieldRenderingMode value: ${this.behavior.fieldRenderingMode}`)
+                            alert(`FormBuilder Error: Invalid fieldRenderingMode value: ${this.behavior.fieldRenderingMode}`)
                         }
                     } else {
                         return 'default'
@@ -94,7 +94,7 @@ export default {
                 showSubmitButtonOnComplete: (() => {
                     if(this.behavior && typeof this.behavior.showSubmitButtonOnComplete) {
                         if(typeof this.behavior.showSubmitButtonOnComplete != 'boolean') {
-                            this.systemError('FormBuilder Error: Invalid "showSubmitButtonOnComplete" value, it should be true or false')
+                            alert('FormBuilder Error: Invalid "showSubmitButtonOnComplete" value, it should be true or false')
                         } else if(typeof this.behavior.showSubmitButtonOnComplete == 'boolean'){
                             return this.behavior.showSubmitButtonOnComplete 
                         } else {
@@ -109,13 +109,13 @@ export default {
                     if(this.behavior) {
                         const useGrouping = this.behavior.useGrouping 
                         if(this.behavior && typeof useGrouping != 'boolean') {
-                            this.systemError('FormBuilder Error: Invalid "useGrouping" value, it should be true or false')
+                            alert('FormBuilder Error: Invalid "useGrouping" value, it should be true or false')
                         } else if(typeof useGrouping == 'boolean'){
                             if(useGrouping == false) {
                                 return false
                             } else {
                                 if(!this.behavior.groups) {
-                                    this.systemError('FormBuilder Error: useGrouping is set to true but couldnt find groups')
+                                    alert('FormBuilder Error: useGrouping is set to true but couldnt find groups')
                                 } else {
                                     return true
                                 }
@@ -134,7 +134,7 @@ export default {
                         const collapsableGroup = this.behavior.collapsableGroup
                         if(this.behavior && collapsableGroup) {
                             if(typeof collapsableGroup != 'boolean') {
-                                this.systemError('FormBuilder Error: Invalid collapsableGroup value it should be true or false')
+                                alert('FormBuilder Error: Invalid collapsableGroup value it should be true or false')
                             } else if (typeof collapsableGroup == 'boolean'){
                                 return collapsableGroup
                             } else {
@@ -154,7 +154,7 @@ export default {
                             if(this.behavior.groups.length != 0) {
                                 return this.behavior.groups
                             } else { 
-                                this.systemError('FormBuilder Error: groups cannot be an empty array')
+                                alert('FormBuilder Error: groups cannot be an empty array')
                             }
                         }
                     }
@@ -166,7 +166,7 @@ export default {
                             if(this.behavior.groups.length != 0) {
                                 return this.behavior.groupDetails
                             } else { 
-                                this.systemError('FormBuilder Error: groups cannot be an empty array')
+                                alert('FormBuilder Error: groups cannot be an empty array')
                             }
                         }
                     }
@@ -226,7 +226,7 @@ export default {
                 
                 // validated fieldLbale
                 if(fieldItem.fieldLabel == undefined) {
-                    this.systemError(`FormBuilder Error: fieldLabel is undefined`)
+                    alert(`FormBuilder Error: fieldLabel is undefined`)
                 } else {
                     cb({
                         fieldLabel: `${fieldItem.fieldLabel}`
@@ -235,16 +235,16 @@ export default {
                 
                 //type
                 if(fieldTypes.includes(fieldItem.fieldtype) == false) {
-                    this.systemError(`FormBuilder Error: Invalid type ${fieldItem.fieldtype}`)
+                    alert(`FormBuilder Error: Invalid type ${fieldItem.fieldtype}`)
                 } else {
                     if(fieldItem.fieldtype == 'multiselect') {
                         if(fieldItem.dataSet == undefined || Array.isArray(fieldItem.dataSet) == false) {
-                            this.systemError(`formBuilder Error: multiselect (${fieldItem.fieldLabel}) dataSet property cannot be undefiend or empty array or not an array`)
+                            alert(`formBuilder Error: multiselect (${fieldItem.fieldLabel}) dataSet property cannot be undefiend or empty array or not an array`)
                         }
 
                         if(fieldItem.defaultValue) {
                             if(Array.isArray(fieldItem.defaultValue) == false) {
-                                this.systemError(`formBuilder Error: multiselect (${fieldItem.fieldLabel}) defaultValue property should be a type of array`)
+                                alert(`formBuilder Error: multiselect (${fieldItem.fieldLabel}) defaultValue property should be a type of array`)
                             }
                         }
                     }
@@ -302,7 +302,7 @@ export default {
 
                 if(fieldItem.group) {
                     if(typeof fieldItem.group != 'string') {
-                        this.systemError('formBuilder Error: Invalid group value type')
+                        alert('formBuilder Error: Invalid group value type')
                     } else {
                         cb({
                             group: fieldItem.group
@@ -316,7 +316,7 @@ export default {
                         onLoad: fieldItem.onLoad
                     })
                 } else {
-                    this.systemError('FormBuilder Error: onLoad should be a function')
+                    alert('FormBuilder Error: onLoad should be a function')
                 }
                 //onInput
                 if(fieldItem.onInput) {
@@ -326,7 +326,7 @@ export default {
                             onInput: fieldItem.onInput
                         })
                     } else {
-                        this.systemError('FormBuilder Error: onLoad should be a function')
+                        alert('FormBuilder Error: onLoad should be a function')
                     }
                 }
             }

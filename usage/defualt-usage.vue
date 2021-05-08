@@ -105,9 +105,9 @@ export default {
                 }                    
             },
             {
-                fieldLabel: 'Age',
+                fieldLabel: 'Price',
                 fieldtype: 'number', // select, range, number, switch, multiselect, textarea
-                fieldDetails: 'Type your age',
+                fieldDetails: 'Type your price',
                 fieldId: '',
                 appendText: '$',
                 dataSet: {},
@@ -136,8 +136,16 @@ export default {
                 fieldtype: 'multiselect', // select, range, number, switch, multiselect, textarea
                 fieldDetails: 'this is description',
                 fieldId: '',
-                defaultValue: ['foo'],
-                dataSet: ['foo','bar'],
+                defaultValue: [
+                    {text: 'foo'},
+                    {img: '', unicode:'' ,text: 'bar'},
+                ],
+                dataSet: [
+                    {img: '', unicode:'' ,text: 'foo'},
+                    {img: '', unicode:'' ,text: 'bar'},
+                    {img: '', unicode:'' ,text: 'baz'},
+                    {img: '', unicode:'' ,text: 'ben'},
+                ],
                 // events
                 onLoad: (element,form,error) => {
                     // element.hide()
@@ -151,8 +159,15 @@ export default {
                 fieldtype: 'select',
                 fieldDetails: 'Select test details',
                 fieldId: '',
-                defaultValue:'',
-                dataSet: ['foo','bar','test'],
+                defaultValue: [
+                    {img: '', unicode:'' ,text: 'foo'}
+                ],
+                dataSet: [
+                    {img: '', unicode:'' ,text: 'foo'},
+                    {img: '', unicode:'' ,text: 'bar'},
+                    {img: '', unicode:'' ,text: 'baz'},
+                    {img: '', unicode:'' ,text: 'ben'},
+                ],
                 // events
                 onLoad: (element,form,error) => {
                     // element.hide()
