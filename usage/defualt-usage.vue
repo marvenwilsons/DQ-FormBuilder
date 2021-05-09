@@ -41,16 +41,14 @@ export default {
     methods: {
         sumbit({data,formMethods,submitMethods}) {
             console.log(data)
-            if(data.username == undefined) {
-                formMethods.username.error('username is a required field')
-            } else {
-                submitMethods.setLoading(true)
-                setTimeout(() => {
-                    submitMethods.setLoading(false)
-                }, 2000);
-            }
-
-            
+            // if(data.username == undefined) {
+            //     formMethods.username.error('username is a required field')
+            // } else {
+            //     submitMethods.setLoading(true)
+            //     setTimeout(() => {
+            //         submitMethods.setLoading(false)
+            //     }, 2000);
+            // }
         }
     },
     mounted() {
@@ -67,6 +65,14 @@ export default {
                 onLoad: (element,form,error) => {
                 },
                 onInput: (element,form,error) => {
+                    console.log(element)
+                    // element.error(element.value != 'foo','this is an error')
+
+                    // if(element.value == 'foo') {
+                    //     element.removeError()
+                    // }
+
+
                     // validation
                     // element.value == 'foo' ? error('this is an error') : element.removeError()
                     // hide
@@ -87,21 +93,21 @@ export default {
                     // console.log('this is form', form)
                 },
                 onInput: (element,form,error) => {
-                    const username = form.username.value
+                    // const username = form.username.value
                     // console.log(username, element.value)
-                    if(username == 'baz' && element.value == 'bar') {
+                    // if(username == 'baz' && element.value == 'bar') {
                         // form.Visitors.show()
                         // form['Test Details'].show()
                         // form['Allow Buffering Fragments'].show()
                         // form['Value in numbers'].show()
                         // form.Range.show()
-                    } else {
+                    // } else {
                         // form.Visitors.hide()
                         // form['Test Details'].hide()
                         // form['Allow Buffering Fragments'].hide()
                         // form['Value in numbers'].hide()
                         // form.Range.hide()
-                    }
+                    // }
                 }                    
             },
             {

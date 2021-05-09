@@ -13,7 +13,7 @@
             </div>
         </div>
         <div class="padleft050 padright050 padtop125 padbottom125 flex flexend" >
-            <button class="dq-button fullwidth pad050" style="background: #5a8ab9; color: white; boxShadow: -1px 4px 9px 0px rgba(187,187,187,1);" >
+            <button @click.stop="getElementValue" class="dq-button fullwidth pad050" style="background: #5a8ab9; color: white; boxShadow: -1px 4px 9px 0px rgba(187,187,187,1);" >
                 Submit
             </button>
         </div>

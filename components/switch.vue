@@ -22,6 +22,11 @@ export default {
     data: () => ({
         state: false
     }),
+    watch: {
+        state() {
+            this.$emit('change',this.state)
+        }
+    },
     mounted() {
         if(this.value) {
             this.state = this.value

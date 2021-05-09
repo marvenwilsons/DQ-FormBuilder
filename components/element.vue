@@ -1,10 +1,10 @@
 <template>
-    <div v-if="hideStatus == false" 
+    <main v-if="hideStatus == false" 
         :class="[...appearanceProperties.fieldElementClasses, '']" 
         :style="{...appearanceProperties.fieldElementCss}"
       > 
        <!-- Custom -->
-        <div
+        <section
             v-if="elementProperty.fieldtype == 'custom'"
             :is="elementProperty.name"
             :style="{background:bgColor}"
@@ -12,10 +12,10 @@
             :class="classes"
             :props="elementProperty.props"
         >
-        </div>
+        </section>
         <!-- String -->
-        <section class="padbottom125" v-if="elementProperty.fieldtype == 'string'" >
-            <MyInputWrapper :el="elementProperty"  >
+        <section class="padbottom125" v-if="fieldType == 'string'" >
+            <MyInputWrapper :el="{fieldDetails,fieldLabel,fieldError}"  >
                 <template #wrapper="{setFucos}" >
                     <input
                         v-model="inputValue"
@@ -27,8 +27,8 @@
             </MyInputWrapper>
         </section>
         <!-- Password -->
-        <section class="padbottom125" v-if="elementProperty.fieldtype == 'password'" >
-            <MyInputWrapper :el="elementProperty"  >
+        <section class="padbottom125" v-if="fieldType== 'password'" >
+            <MyInputWrapper :el="{fieldDetails,fieldLabel,fieldError}"  >
                 <template #wrapper="{setFucos}" >
                     <input
                         v-model="inputValue"
@@ -41,8 +41,8 @@
             </MyInputWrapper>
         </section>        
         <!-- textarea -->
-        <section class="padbottom125" v-if="elementProperty.fieldtype == 'textarea'" >
-            <MyInputWrapper :el="elementProperty" >
+        <section class="padbottom125" v-if="fieldType == 'textarea'" >
+            <MyInputWrapper :el="{fieldDetails,fieldLabel,fieldError}" >
                 <template #wrapper="{setFucos}" >
                     <textarea
                         v-model="inputValue"
@@ -55,8 +55,8 @@
             </MyInputWrapper>
         </section>
         <!-- number -->
-        <section class=" padbottom125" v-if="elementProperty.fieldtype == 'number'" >
-            <MyInputWrapper :el="elementProperty" >
+        <section class=" padbottom125" v-if="fieldType == 'number'" >
+            <MyInputWrapper :el="{fieldDetails,fieldLabel,fieldError}" >
                 <template #wrapper="{setFucos}" >
                     <MyNumber
                         :class="[classes, 'fullwidth padInp borderRad4']"
@@ -75,8 +75,8 @@
             TODO:
                 1. min and max is static, make it bind
          -->
-        <section v-if="elementProperty.fieldtype == 'range'">
-            <MyInputWrapper :el="elementProperty" >
+        <section v-if="fieldType == 'range'">
+            <MyInputWrapper :el="{fieldDetails,fieldLabel,fieldError}" >
                 <template #wrapper="{setFucos}" >
                     <RangeSlider 
                         :min="dataSet && dataSet.min ? dataSet.min : 20"
@@ -89,26 +89,25 @@
             </MyInputWrapper>
         </section>
         <!-- switch -->
-        <section v-if="elementProperty.fieldtype == 'switch'" >
+        <section v-if="fieldType == 'switch'" >
             <MySwitch 
-                :error-messages="errorMsg"
                 :loading="loadingStatus"
                 :style="{background:bgColor}"
                 :id="myId"
                 :class="[classes, 'fullwidth padtop025 padbottom025 borderRad4']"
                 :disabled="disableStatus"
-                :label="elementProperty.fieldLabel"
+                :label="fieldLabel"
                 @change="(value) => inputValue = value"
             />
             <span>
                 <p class="padtop050 err field-p" >
-                    {{errorMsg ? errorMsg : elementProperty.fieldDetails}}
+                    {{fieldError ? fieldError : fieldDetails}}
                 </p>
             </span>
         </section>        
         <!-- select -->
-        <section class="padbottom125" v-if="elementProperty.fieldtype == 'select'" >
-            <MyInputWrapper :el="elementProperty" >
+        <section class="padbottom125" v-if="fieldType == 'select'" >
+            <MyInputWrapper :el="{fieldDetails,fieldLabel,fieldError}" >
                 <template #wrapper="{setFucos}" >
                     <MySelect
                         :label="elementProperty.fieldLabel"
@@ -124,8 +123,8 @@
             </MyInputWrapper>
         </section>
         <!-- multiselect -->
-        <section class="padbottom125" v-if="elementProperty.fieldtype == 'multiselect'" >
-            <MyInputWrapper :el="elementProperty" >
+        <section class="padbottom125" v-if="fieldType == 'multiselect'" >
+            <MyInputWrapper :el="{fieldDetails,fieldLabel,fieldError}" >
                 <template #wrapper="{setFucos}" >
                     <MySelect
                         :label="elementProperty.fieldLabel"
@@ -140,11 +139,22 @@
                 </template>
             </MyInputWrapper>
         </section>
-        <!-- autocomplete -->
-        <!-- autocomplete countries -->
-        <!-- CheckBox -->
-        <!-- Radio -->
-    </div>
+        <!-- autocomplete: TODO -->
+        <section v-if="fieldType== 'autocomplete'" >
+        </section>
+        <!-- autocomplete countries: TODO -->
+        <section v-if="fieldType == 'countries'" >
+        </section>
+        <!-- CheckBox: TODO -->
+        <section v-if="fieldType == 'checkbox'" >
+        </section>
+        <!-- Radio: TODO -->
+        <section v-if="fieldType == 'radio'" >
+        </section>
+        <!-- date picker: TODO -->
+        <section v-if="fieldType == 'date picker'" >
+        </section>
+    </main>
 </template>
 
 <script>
@@ -159,45 +169,56 @@ export default {
     data: () => ({
         activeOutlineColor: '#cbd7e4',
 
+
         inputValue: undefined,
         dataSet: undefined,
         args: undefined,
-        errorMsg: undefined,
-        hideStatus: false,
         classes: [],
         disableStatus: false,
         loadingStatus: false,
         bgColor: undefined,
-        fieldDetails: undefined,
+        
+
+        // Field Properties
+        fieldDetails: undefined, // display the description of the field
+        fieldType: undefined, // the type of the field
+        fieldLabel: undefined, // displays field label
+        fieldError: undefined, // if defined displays error message on the field
+        hideStatus: false, // hides the field if true
         myId: undefined,
-        elementLabel: undefined
+
+
     }),
     mounted() {
-        this.elementLabel = this.elementProperty.fieldLabel
-        this.inputValue = this.elementProperty.defaultValue
-        this.dataSet = this.elementProperty.dataSet
+        const {fieldLabel,fieldtype,fieldDetails,defaultValue,dataSet} = this.elementProperty
+        
+        // setting configs and defaults
+        this.fieldLabel = fieldLabel
+        this.inputValue = defaultValue
+        this.fieldType = fieldtype
+        this.fieldDetails = fieldDetails
+        this.dataSet = dataSet
+
+        // classes
         this.classes.push('dq-input-fontsize')
 
+        //
         this.args = {
             element: {
-                hide: this.hide,
-                show: this.show,
-                addClass: this.addClass,
-                removeClass: this.removeClass,
+                // addClass: this.addClass,
+                // removeClass: this.removeClass,
+                // setBackgroundColor: this.setBackgroundColor,
+                // showLoading: this.showLoading,
+                // setFieldId: this.setFieldId,
+                hide: this.hide, // done
+                show: this.show, // done
                 disable: this.disable,
-                setBackgroundColor: this.setBackgroundColor,
-                showLoading: this.showLoading,
-                setFieldDetails: this.setFieldDetails,
-                setFieldId: this.setFieldId,
-                error: this.error,
-                removeError: this.removeError,
-                value: this.inputValue
-            },
-            schema: {
-
-            },
-            prevInput: '',
-            error: ''
+                setFieldDetails: this.setFieldDetails, // done
+                error: this.error, // done
+                setError: this.setError, // done
+                removeError: this.removeError, // done
+                value: this.inputValue // done
+            }
         }
 
         for(let key in this.args.element) {
@@ -221,9 +242,9 @@ export default {
         }
     },
     methods: {
-        error(ErrMSg) {
-            this.errorMsg = ErrMSg
-            const fieldLabel = this.elementProperty.fieldLabel
+        error(msg) {
+            this.fieldError = msg
+            const fieldLabel = this.fieldLabel
             const group = this.elementProperty.group
             if(this.formMethods[group]) {
                 this.formMethods[group].map(e => {
@@ -233,8 +254,15 @@ export default {
                 })
             }
         },
+        setError(condition,msg) {
+            if(condition) {
+                this.error(msg)
+            } else {
+                this.removeError()
+            }
+        },
         removeError() {
-            this.errorMsg = undefined
+            this.fieldError = undefined
             const fieldLabel = this.elementProperty.fieldLabel
             const group = this.elementProperty.group
             if(this.formMethods[group]) {
@@ -252,7 +280,7 @@ export default {
         },
         show() {
             this.hideStatus = false
-            this.$emit('onShow',this.elementProperty.fieldLabel)
+            this.$emit('onShow',this.fieldLabel)
         },
         addClass(ArrayOfClasses) {
             if(typeof ArrayOfClasses == 'string') {
@@ -285,6 +313,9 @@ export default {
         },
         setFieldId(Id) {
             this.myId = Id
+        },
+        setFieldType(v) {
+            this.fieldType = v
         }
     }
 }

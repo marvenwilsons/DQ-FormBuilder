@@ -69,7 +69,8 @@ export default {
             this.showSlider = v
         },
         blur() {
-            this.$refs.ard.setStatus(false)
+            // this.$refs.ard.setStatus(false)
+            this.showSlider = false
             this.$emit('blur')
         },
         setRange() {

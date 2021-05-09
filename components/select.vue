@@ -52,18 +52,21 @@ export default {
         currentValue: [],
         showMenu: false
     }),
+    watch: {
+        showMenu(n) {
+            if(n) {
+                this.$emit('focus')
+            } else {
+                this.$emit('blur')
+            }
+        }
+    },
     methods: {
         toggleDropDown(v) {
             this.showMenu = v
         },
         toggle() {
             this.showMenu = !this.showMenu
-
-            if(this.showMenu) {
-                this.$emit('focus')
-            } else {
-                this.$emit('blur')
-            }
         },
         itemSelected(e) {
             this.showMenu = false
