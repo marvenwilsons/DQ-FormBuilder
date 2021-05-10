@@ -15,20 +15,20 @@
         </section>
         <!-- String -->
         <section class="padbottom125" v-if="fieldType == 'string'" >
-            <MyInputWrapper :el="{fieldDetails,fieldLabel,fieldError}"  >
+            <MyInputWrapper :el="{fieldDetails,fieldLabel,fieldError,fieldLoading}"  >
                 <template #wrapper="{setFucos}" >
                     <input
                         v-model="inputValue"
                         :class="[classes, 'fullwidth padInp']"
                         @focus="setFucos(true,activeOutlineColor)"
-                        @blur="setFucos(false)" 
+                        @blur="setFucos(false), onBlur()" 
                     />
                 </template>
             </MyInputWrapper>
         </section>
         <!-- Password -->
         <section class="padbottom125" v-if="fieldType== 'password'" >
-            <MyInputWrapper :el="{fieldDetails,fieldLabel,fieldError}"  >
+            <MyInputWrapper :el="{fieldDetails,fieldLabel,fieldError,fieldLoading}"  >
                 <template #wrapper="{setFucos}" >
                     <input
                         v-model="inputValue"
@@ -42,7 +42,7 @@
         </section>        
         <!-- textarea -->
         <section class="padbottom125" v-if="fieldType == 'textarea'" >
-            <MyInputWrapper :el="{fieldDetails,fieldLabel,fieldError}" >
+            <MyInputWrapper :el="{fieldDetails,fieldLabel,fieldError,fieldLoading}" >
                 <template #wrapper="{setFucos}" >
                     <textarea
                         v-model="inputValue"
@@ -56,7 +56,7 @@
         </section>
         <!-- number -->
         <section class=" padbottom125" v-if="fieldType == 'number'" >
-            <MyInputWrapper :el="{fieldDetails,fieldLabel,fieldError}" >
+            <MyInputWrapper :el="{fieldDetails,fieldLabel,fieldError,fieldLoading}" >
                 <template #wrapper="{setFucos}" >
                     <MyNumber
                         :class="[classes, 'fullwidth padInp borderRad4']"
@@ -76,7 +76,7 @@
                 1. min and max is static, make it bind
          -->
         <section v-if="fieldType == 'range'">
-            <MyInputWrapper :el="{fieldDetails,fieldLabel,fieldError}" >
+            <MyInputWrapper :el="{fieldDetails,fieldLabel,fieldError,fieldLoading}" >
                 <template #wrapper="{setFucos}" >
                     <RangeSlider 
                         :min="dataSet && dataSet.min ? dataSet.min : 20"
@@ -107,7 +107,7 @@
         </section>        
         <!-- select -->
         <section class="padbottom125" v-if="fieldType == 'select'" >
-            <MyInputWrapper :el="{fieldDetails,fieldLabel,fieldError}" >
+            <MyInputWrapper :el="{fieldDetails,fieldLabel,fieldError,fieldLoading}" >
                 <template #wrapper="{setFucos}" >
                     <MySelect
                         :label="elementProperty.fieldLabel"
@@ -124,7 +124,7 @@
         </section>
         <!-- multiselect -->
         <section class="padbottom125" v-if="fieldType == 'multiselect'" >
-            <MyInputWrapper :el="{fieldDetails,fieldLabel,fieldError}" >
+            <MyInputWrapper :el="{fieldDetails,fieldLabel,fieldError,fieldLoading}" >
                 <template #wrapper="{setFucos}" >
                     <MySelect
                         :label="elementProperty.fieldLabel"
@@ -185,6 +185,7 @@ export default {
         fieldLabel: undefined, // displays field label
         fieldError: undefined, // if defined displays error message on the field
         hideStatus: false, // hides the field if true
+        fieldLoading: false,
         myId: undefined,
 
 
@@ -217,7 +218,8 @@ export default {
                 error: this.error, // done
                 setError: this.setError, // done
                 removeError: this.removeError, // done
-                value: this.inputValue // done
+                value: this.inputValue, // done
+                loading: this.loading
             }
         }
 
@@ -282,27 +284,11 @@ export default {
             this.hideStatus = false
             this.$emit('onShow',this.fieldLabel)
         },
-        addClass(ArrayOfClasses) {
-            if(typeof ArrayOfClasses == 'string') {
-                this.classes.push(ArrayOfClasses)
-            } else if(Array.isArray(ArrayOfClasses)) {
-                ArrayOfClasses.map(e => {
-                    this.classes.push(e)
-                })
-            }
-        },
-        removeClass(NameOfClass) {
-            this.classes = this.classes.filter(e => {
-                if(e != NameOfClass) {
-                    return e
-                }
-            })
+        loading(v) {
+            this.fieldLoading = v
         },
         disable(isDisable) {
             this.disableStatus = isDisable
-        },
-        setBackgroundColor(ColorName) {
-            this.bgColor = ColorName
         },
         showLoading(Arg) {
             this.loadingStatus = Arg
@@ -311,11 +297,12 @@ export default {
         setFieldDetails(Details) {
             this.fieldDetails = Details
         },
-        setFieldId(Id) {
-            this.myId = Id
-        },
         setFieldType(v) {
             this.fieldType = v
+        },
+        // for type string, or password
+        onBlur() {
+            console.log('bluring')
         }
     }
 }

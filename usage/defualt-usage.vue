@@ -81,6 +81,19 @@ export default {
                     // element.value == 'borderred' ? element.addClass(element.value) : element.removeClass('borderred')
                     // mutate an input
                     // form.password.setFieldDetails(`Set password for ${element.value}`)
+                },
+                onBlur(element,form) {
+                    element.loading()
+                    element.setFieldDetails('Validating')
+
+                    setTimeout(() => {
+                        if(element.value == 'foo') {
+                            element.removeLoading()
+                        } else {
+                            element.removeLoading()
+                            element.error('Username already exist.')
+                        }
+                    },4000)            
                 }                    
             },
             {
@@ -243,3 +256,9 @@ export default {
     }
 }
 </script>
+
+<style>
+#bg {
+background-color:#ffaf99;background-image: radial-gradient(at 59% 79%, hsla(329,97%,79%,1) 0, transparent 51%), radial-gradient(at 62% 35%, hsla(279,68%,66%,1) 0, transparent 43%), radial-gradient(at 48% 3%, hsla(19,64%,61%,1) 0, transparent 57%), radial-gradient(at 92% 18%, hsla(170,69%,63%,1) 0, transparent 49%), radial-gradient(at 24% 46%, hsla(339,62%,78%,1) 0, transparent 55%), radial-gradient(at 28% 74%, hsla(25,67%,77%,1) 0, transparent 54%), radial-gradient(at 40% 87%, hsla(302,86%,71%,1) 0, transparent 51%);
+}
+</style>

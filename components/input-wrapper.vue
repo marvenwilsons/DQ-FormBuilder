@@ -9,7 +9,9 @@
             >
                 <slot name="wrapper" :setFucos="setFucos" ></slot>
                 <!-- loading -->
-                <div :style="{background:'rgba(220, 220, 220, 0.76)', zIndex: '900'}" class="absolute fullwidth fullheight-percent borderRad4 flex flexend" >
+                <div v-if="el.fieldLoading"
+                    :style="{background:'rgba(220, 220, 220, 0.76)', zIndex: '900'}" 
+                    class="absolute fullwidth fullheight-percent borderRad4 flex flexend" >
                     <!-- loader -->
                     <div :style="{background:''}" class="padleft050 padright050" >
                         <div class="flex flexcenter fullheight-percent" >
