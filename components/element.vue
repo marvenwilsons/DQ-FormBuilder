@@ -20,6 +20,7 @@
                     <input
                         v-model="inputValue"
                         :class="[classes, 'fullwidth padInp']"
+                        :disabled="fieldLoading"
                         @focus="setFucos(true,activeOutlineColor)"
                         @blur="setFucos(false), onBlur()" 
                     />
@@ -35,7 +36,7 @@
                         :class="[classes, 'fullwidth padInp']"
                         type="password"
                         @focus="setFucos(true,activeOutlineColor)"
-                        @blur="setFucos(false)" 
+                        @blur="setFucos(false), onBlur()" 
                     />
                 </template>
             </MyInputWrapper>
@@ -49,7 +50,7 @@
                         :style="{minHeight:'150px'}"
                         :class="[classes, 'fullwidth padInp']"
                         @focus="setFucos(true,activeOutlineColor)"
-                        @blur="setFucos(false)"
+                        @blur="setFucos(false), onBlur()"
                     />
                 </template>
             </MyInputWrapper>
@@ -65,7 +66,7 @@
                             activeOutlineColor: activeOutlineColor
                         }"
                         @focus="setFucos(true,activeOutlineColor)"
-                        @blur="setFucos(false)"
+                        @blur="setFucos(false), onBlur()"
                         @change="(v) => inputValue = v"
                     />
                 </template>
@@ -190,7 +191,7 @@ export default {
 
 
     }),
-    mounted() {
+    created() {
         const {fieldLabel,fieldtype,fieldDetails,defaultValue,dataSet} = this.elementProperty
         
         // setting configs and defaults
@@ -229,8 +230,10 @@ export default {
 
         this.$emit('fieldItems', this.formMethods)
 
-        this.elementProperty.onLoad(this.args.element,this.formMethods,this.error)
     },
+    mounted() {
+        this.elementProperty.onLoad(this.args.element,this.formMethods,this.error)
+    },  
     watch: {
         inputValue: {
             handler(val) {
@@ -302,7 +305,8 @@ export default {
         },
         // for type string, or password
         onBlur() {
-            console.log('bluring')
+            this.fieldError = undefined
+            this.elementProperty.onBlur(this.args.element,this.formMethods)
         }
     }
 }

@@ -280,12 +280,6 @@ export default {
                     }
                 }
 
-                if(fieldItem.fieldId){
-                    cb({
-                        fieldId: fieldItem.fieldId
-                    })
-                }
-
                 if(fieldItem.dataSet) {
                     cb({
                         dataSet: fieldItem.dataSet
@@ -310,14 +304,21 @@ export default {
                     }
                 }
                 //onLoad
-                if(typeof fieldItem.onLoad == 'function') {
+                if(fieldItem.onLoad) {
                     // element,schema,prevInput,error
-                    cb({
-                        onLoad: fieldItem.onLoad
-                    })
+                    cb({onLoad: fieldItem.onLoad})
                 } else {
-                    alert('FormBuilder Error: onLoad should be a function')
+                    cb({onLoad: () => {}})
                 }
+
+                
+                if(fieldItem.onBlur) {
+                    cb({onBlur: fieldItem.onBlur})
+                } else {
+                    cb({onBlur: () => {}})
+                }
+
+
                 //onInput
                 if(fieldItem.onInput) {
                     if(typeof fieldItem.onInput == 'function') {

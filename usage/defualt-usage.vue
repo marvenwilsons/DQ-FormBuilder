@@ -1,6 +1,7 @@
 <template>
     <v-flex style="overflow-x : scroll" relative flexcol flexcenter flexstart  >
         <div >
+            <h1>TODO: Build autocomplete input</h1>
             <formBuilder
             @onSubmit="sumbit"
             @onChange="() => {}"
@@ -62,10 +63,19 @@ export default {
                 defaultValue: '',
                 dataSet: {},
                 // events
-                onLoad: (element,form,error) => {
+                onLoad(element,form,error) {
+                    form.Password.loading(true)
+                    setTimeout(() => {
+                        form.Password.loading(false)
+                    }, 2000)
                 },
                 onInput: (element,form,error) => {
                     console.log(element)
+                    if(element.value == 'foo') {
+                        console.log('initiating loading')
+                        element.loading(true)
+                        element.setFieldDetails('Validating ... ')
+                    }
                     // element.error(element.value != 'foo','this is an error')
 
                     // if(element.value == 'foo') {
@@ -82,15 +92,17 @@ export default {
                     // mutate an input
                     // form.password.setFieldDetails(`Set password for ${element.value}`)
                 },
-                onBlur(element,form) {
-                    element.loading()
-                    element.setFieldDetails('Validating')
+                onBlur: (element,form) => {
+                    console.log('onblur', form)
+                    element.loading(true)
+                    element.setFieldDetails('Validating ...')
 
                     setTimeout(() => {
-                        if(element.value == 'foo') {
-                            element.removeLoading()
+                        if(element.value == 'baz') {
+                            element.loading(false)
+                            element.setFieldDetails(`${element.value} is valid`)
                         } else {
-                            element.removeLoading()
+                            element.loading(false)
                             element.error('Username already exist.')
                         }
                     },4000)            
@@ -104,6 +116,9 @@ export default {
                 dataSet: {},
                 onLoad: (element,form,error) => {
                     // console.log('this is form', form)
+                },
+                onBlur() {
+                    console.log('password on blur')
                 },
                 onInput: (element,form,error) => {
                     // const username = form.username.value
