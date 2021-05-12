@@ -84,7 +84,7 @@
                         :max="dataSet && dataSet.max ? dataSet.max : 100"
                         @change="(value) => inputValue = value"
                         @focus="setFucos(true,activeOutlineColor)"
-                        @blur="setFucos(false)"
+                        @blur="setFucos(false), onBlur()"
                     />
                 </template>
             </MyInputWrapper>
@@ -118,7 +118,7 @@
                         :defaultValue="elementProperty.defaultValue"
                         :options="elementProperty.dataSet"
                         @focus="setFucos(true,activeOutlineColor)"
-                        @blur="setFucos(false)"
+                        @blur="setFucos(false), onBlur()"
                     ></MySelect>
                 </template>
             </MyInputWrapper>
@@ -135,13 +135,22 @@
                         :defaultValue="elementProperty.defaultValue"
                         :options="elementProperty.dataSet"
                         @focus="setFucos(true,activeOutlineColor)"
-                        @blur="setFucos(false)"
+                        @blur="setFucos(false), onBlur()"
                     ></MySelect>
                 </template>
             </MyInputWrapper>
         </section>
         <!-- autocomplete: TODO -->
         <section v-if="fieldType== 'autocomplete'" >
+            <MyInputWrapper :el="{fieldDetails,fieldLabel,fieldError,fieldLoading}" >
+                <template #wrapper="{setFucos}" >
+                    <MyAutoComplete
+                        @focus="setFucos(true,activeOutlineColor)"
+                        @blur="setFucos(false), onBlur()" 
+                        :options="elementProperty.dataSet"
+                    />
+                </template>
+            </MyInputWrapper>
         </section>
         <!-- autocomplete countries: TODO -->
         <section v-if="fieldType == 'countries'" >
@@ -164,8 +173,9 @@ import MySwitch from './switch'
 import MySelect from './select'
 import MyNumber from './number'
 import MyInputWrapper from './input-wrapper'
+import MyAutoComplete from './autocomplete'
 export default {
-    components: {RangeSlider, MySwitch, MySelect, MyNumber,MyInputWrapper},
+    components: {RangeSlider,MySwitch,MySelect,MyNumber,MyInputWrapper,MyAutoComplete},
     props: ['elementProperty','appearanceProperties','formMethods','hostMethods',],
     data: () => ({
         activeOutlineColor: '#cbd7e4',

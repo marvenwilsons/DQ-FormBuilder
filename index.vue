@@ -222,7 +222,7 @@ export default {
         },
         getFieldItems() {
             const isValidField = (fieldItem, cb) => {
-                const fieldTypes = ['string', 'password', 'select', 'range', 'number', 'switch' , 'multiselect', 'textarea']
+                const fieldTypes = ['string', 'password', 'select', 'range', 'number', 'switch' , 'multiselect', 'textarea', 'autocomplete']
                 
                 // validated fieldLbale
                 if(fieldItem.fieldLabel == undefined) {

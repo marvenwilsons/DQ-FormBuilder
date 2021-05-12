@@ -56,6 +56,16 @@ export default {
         // console.log('hello world! this is pageContent')
         this.fields = [
             {
+                fieldLabel: 'Search',
+                fieldtype: 'autocomplete',
+                fieldDetails: '',
+                defaultValue: '',
+                dataSet:['foo','bar','baz'],
+                onLoad() {},
+                onInput() {},
+                onBlur() {}
+            },
+            {
                 fieldLabel: 'Username',
                 fieldtype: 'string', // select, range, number, switch, multiselect, textarea
                 fieldDetails: 'type your username',
