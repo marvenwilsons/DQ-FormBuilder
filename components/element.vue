@@ -140,13 +140,16 @@
                 </template>
             </MyInputWrapper>
         </section>
-        <!-- autocomplete: TODO -->
-        <section v-if="fieldType== 'autocomplete'" >
+        <!-- autocomplete: -->
+        <section class="padbottom125" v-if="fieldType== 'autocomplete'" >
             <MyInputWrapper :el="{fieldDetails,fieldLabel,fieldError,fieldLoading}" >
                 <template #wrapper="{setFucos}" >
                     <MyAutoComplete
                         @focus="setFucos(true,activeOutlineColor)"
                         @blur="setFucos(false), onBlur()" 
+                        :defaultValue="elementProperty.defaultValue"
+                        :class="classes"
+                        :label="elementProperty.fieldLabel"
                         :options="elementProperty.dataSet"
                     />
                 </template>

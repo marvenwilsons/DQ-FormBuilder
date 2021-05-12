@@ -60,7 +60,7 @@ export default {
                 fieldtype: 'autocomplete',
                 fieldDetails: '',
                 defaultValue: '',
-                dataSet:['foo','bar','baz'],
+                dataSet:['foo','bar','baz','zedd','teisto','skrillex'],
                 onLoad() {},
                 onInput() {},
                 onBlur() {}
